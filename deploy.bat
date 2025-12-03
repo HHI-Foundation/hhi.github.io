@@ -1,71 +1,67 @@
 @echo off
-chcp 65001 >nul
-REM Git 自动推送批处理脚本
+REM Git auto push script
 
-REM 设置项目目录
+REM Set project directory
 set PROJECT_DIR=D:\Projects\SM\HHI
 
-REM 切换到项目目录
+REM Change to project directory
 cd /d %PROJECT_DIR%
 if %errorlevel% neq 0 (
-    echo 错误：无法切换到项目目录 %PROJECT_DIR%
+    echo Error: Cannot change to project directory %PROJECT_DIR%
     pause
     exit /b 1
 )
 
-REM 显示当前目录
+REM Show current directory
 cls
-echo 当前目录：%CD%
+echo Current directory: %CD%
 echo.
 
-REM 检查Git状态
+REM Check Git status
 git status
 if %errorlevel% neq 0 (
-    echo 错误：Git命令执行失败
+    echo Error: Git command failed
     pause
     exit /b 1
 )
 
 echo.
-echo 按任意键继续添加所有更改...
+echo Press any key to continue adding all changes...
 pause >nul
 
-REM 添加所有更改
+REM Add all changes
 git add .
 if %errorlevel% neq 0 (
-    echo 错误：git add 命令执行失败
+    echo Error: git add command failed
     pause
     exit /b 1
 )
 
 echo.
-echo 输入提交信息（默认为"更新内容"）：
-set "COMMIT_MSG="
-set /p "COMMIT_MSG=提交信息："
-if "%COMMIT_MSG%"=="" set "COMMIT_MSG=更新内容"
-
-REM 提交更改
-git commit -m "%COMMIT_MSG%"
-if %errorlevel% neq 0 (
-    echo 错误：git commit 命令执行失败
-    pause
-    exit /b 1
-)
-
-echo.
-echo 按任意键推送到远程仓库...
+echo Press any key to commit changes...
 pause >nul
 
-REM 推送到远程仓库
-git push origin main
+REM Commit changes
+git commit -m "Update content"
 if %errorlevel% neq 0 (
-    echo 错误：git push 命令执行失败
+    echo Error: git commit command failed
     pause
     exit /b 1
 )
 
 echo.
-echo ✅ 推送成功完成！
-echo 提交信息：%COMMIT_MSG%
+echo Press any key to push to remote repository...
+pause >nul
+
+REM Push to remote repository
+git push origin main
+if %errorlevel% neq 0 (
+    echo Error: git push command failed
+    pause
+    exit /b 1
+)
+
+echo.
+echo Push completed successfully!
 echo.
 pause
